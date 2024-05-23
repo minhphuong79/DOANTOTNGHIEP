@@ -70,5 +70,11 @@ namespace WebBanHangOnline.Controllers
         {
             base.Dispose(disposing);
         }
+
+        public ActionResult HienThi()
+        {
+            IEnumerable<Wishlist> items = db.Wishlists.Where(x => x.UserName == User.Identity.Name).OrderByDescending(x => x.CreatedDate).ToList();
+            return View(items);
+        }
     }
 }

@@ -215,6 +215,10 @@
     <Compile Include="Migrations\202405031458035_UpdateDb1.Designer.cs">
       <DependentUpon>202405031458035_UpdateDb1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405071719471_DB.cs" />
+    <Compile Include="Migrations\202405071719471_DB.Designer.cs">
+      <DependentUpon>202405071719471_DB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -3564,6 +3568,7 @@
     <Content Include="Views\Review\_Load_Review.cshtml" />
     <Content Include="Views\Wishlist\Index.cshtml" />
     <Content Include="Views\Review\LichSuDonHang.cshtml" />
+    <Content Include="Views\Wishlist\HienThi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3592,6 +3597,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405031458035_UpdateDb1.resx">
       <DependentUpon>202405031458035_UpdateDb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405071719471_DB.resx">
+      <DependentUpon>202405071719471_DB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

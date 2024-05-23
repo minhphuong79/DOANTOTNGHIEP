@@ -469,6 +469,7 @@ section
 	height: 50px;
 	line-height: 50px;
 	font-size: 13px;
+	width: 150px;
 }
 .account > a > i
 {
@@ -608,8 +609,7 @@ section
 	background: #eceff6;
 	border-radius: 50%;
 }
-.checkout_items
-{
+.checkout_items {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -624,7 +624,7 @@ section
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	background: #fe4c50;
+	background: #A63F56;
 	font-size: 12px;
 	color: #FFFFFF;
 }
@@ -812,7 +812,7 @@ section
 }
 .logo_container a span
 {
-	color: #fe4c50;
+	color: #E580A4;
 }
 
 /*********************************
@@ -843,8 +843,7 @@ section
 	font-weight: 400;
 	line-height: 1;
 }
-.red_button
-{
+.red_button {
 	display: -webkit-inline-box;
 	display: -moz-inline-box;
 	display: -ms-inline-flexbox;
@@ -855,7 +854,7 @@ section
 	align-items: center;
 	width: auto;
 	height: 40px;
-	background: #fe4c50;
+	background: #A63F56;
 	border-radius: 3px;
 	-webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
@@ -990,11 +989,10 @@ section
 {
 	background: #FE7C7F !important;
 }
-.grid_sorting_button.active
-{
-	color: #FFFFFF;
-	background: #fe4c50;
-}
+	.grid_sorting_button.active {
+		color: #FFFFFF;
+		background: #A63F56;
+	}
 
 /*********************************
 5.2 New Arrivals Products Grid
@@ -1071,10 +1069,9 @@ section
 {
 	font-size: 14px;
 }
-.product_price
-{
+.product_price {
 	font-size: 16px;
-	color: #fe4c50;
+	color: #A63F56;
 	font-weight: 600;
 }
 .product_price span
@@ -1122,17 +1119,15 @@ section
 	bottom: -6px;
 	border: 6px solid;
 }
-.product_bubble_red::after
-{
-	border-color: transparent transparent transparent #fe4c50;
+.product_bubble_red::after {
+	border-color: transparent transparent transparent #A63F56;
 }
 .product_bubble_left::after
 {
 	border-color: #51a042 #51a042 transparent transparent;
 }
-.product_bubble_red
-{
-	background: #fe4c50;
+.product_bubble_red {
+	background: #A63F56;
 }
 .product_bubble_green
 {
@@ -1196,7 +1191,7 @@ section
 {
 	font-family: 'FontAwesome';
 	content:'\f004';
-	color: #fe4c50;
+	color: #A63F56;
 }
 .favorite::after
 {
@@ -1205,7 +1200,7 @@ section
 }
 .favorite:hover::after
 {
-	color: #fe4c50;
+	color: #A63F56;
 }
 
 /*********************************
@@ -1252,7 +1247,7 @@ section
 	transform: translateX(-50%);
 	width: 60px;
 	height: 5px;
-	background: #fe4c50;
+	background: #A63F56;
 	content: '';
 }
 .timer
@@ -1276,7 +1271,7 @@ section
 {
 	font-size: 48px;
 	font-weight: 600;
-	color: #fe4c50;
+	color: #A63F56;
 	margin-top: 10px;
 }
 .timer_unit
@@ -1414,7 +1409,7 @@ section
 .benefit_icon i
 {
 	font-size: 30px;
-	color: #fe4c50;
+	color: #A63F56;
 }
 .benefit_content
 {
@@ -1515,8 +1510,8 @@ section
 	font-size: 14px;
 	line-height: 16px;
 	font-weight: 500;
-	color: #fe4c50;
-	border-bottom: solid 1px #fe4c50;
+	color: #A63F56;
+	border-bottom: solid 1px #A63F56;
 	margin-top: 12px;
 }
 .blog_more:hover
@@ -1605,7 +1600,7 @@ section
 	width: 160px;
 	height: 46px;
 	border: none;
-	background: #fe4c50;
+	background: #A63F56;
 	color: #FFFFFF;
 	font-size: 14px;
 	font-weight: 500;
@@ -1651,7 +1646,7 @@ section
 }
 .footer_nav li a:hover, .cr a, .cr i
 {
-	color: #fe4c50;
+	color: #A63F56;
 }
 .footer_social
 {
@@ -1682,5 +1677,5 @@ section
 }
 .footer_social ul li a:hover
 {
-	color: #fe4c50;
+	color: #A63F56;
 }

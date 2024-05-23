@@ -217,6 +217,24 @@ namespace WebBanHangOnline.Controllers
                     //order.E = req.CustomerName;
                     db.Orders.Add(order);
                     db.SaveChanges();
+
+
+                    // Update product quantities
+                    foreach (var item in cart.Items)
+                    {
+                        var product = db.Products.SingleOrDefault(p => p.Id == item.ProductId);
+                        if (product != null)
+                        {
+                            product.Quantity -= item.Quantity;
+                            if (product.Quantity < 0)
+                            {
+                                product.Quantity = 0; // or handle out-of-stock scenario
+                            }
+                        }
+                    }
+                    db.SaveChanges();
+
+
                     //send mail cho khachs hang
                     var strSanPham = "";
                     var thanhtien = decimal.Zero;
