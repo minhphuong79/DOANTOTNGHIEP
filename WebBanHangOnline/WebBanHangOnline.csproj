@@ -207,17 +207,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202405031444155_UpdateDb.cs" />
-    <Compile Include="Migrations\202405031444155_UpdateDb.Designer.cs">
-      <DependentUpon>202405031444155_UpdateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405031458035_UpdateDb1.cs" />
-    <Compile Include="Migrations\202405031458035_UpdateDb1.Designer.cs">
-      <DependentUpon>202405031458035_UpdateDb1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405071719471_DB.cs" />
-    <Compile Include="Migrations\202405071719471_DB.Designer.cs">
-      <DependentUpon>202405071719471_DB.cs</DependentUpon>
+    <Compile Include="Migrations\202407211327052_DB.cs" />
+    <Compile Include="Migrations\202407211327052_DB.Designer.cs">
+      <DependentUpon>202407211327052_DB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -3502,7 +3494,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsConvert.js" />
-    <Content Include="Scripts\jsShopping.js" />
+    <Content Include="Scripts\jsShoppingCart.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Uploads\images\244994762_2380031152133544_4984166604951804110_n.jpg" />
     <Content Include="Uploads\_thumbs\Images\244994762_2380031152133544_4984166604951804110_n.jpg" />
@@ -3592,14 +3584,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405031444155_UpdateDb.resx">
-      <DependentUpon>202405031444155_UpdateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405031458035_UpdateDb1.resx">
-      <DependentUpon>202405031458035_UpdateDb1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405071719471_DB.resx">
-      <DependentUpon>202405071719471_DB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202407211327052_DB.resx">
+      <DependentUpon>202407211327052_DB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

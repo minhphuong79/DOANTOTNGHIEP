@@ -68,7 +68,7 @@
                                         }
                                         else
                                         {
-                                            <a href="#">
+                                            <a href="#" style="width:auto;">
                                                 Welcome: @User.Identity.Name
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
@@ -103,7 +103,7 @@
                     <div class="row">
                         <div class="col-lg-12 text-right">
                             <div class="logo_container">
-                                <a href="/home"><span>bambi shop</span></a>
+                                <a href="/home"><span>TIAM</span></a>
                             </div>
                             <nav class="navbar">
                                 @Html.Action("MenuTop", "Menu")
@@ -121,17 +121,17 @@
                                             }
                                         </style>
                                         <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
-
-                                        <form>
+                                        @using (Html.BeginForm("Search", "Products", FormMethod.Get, new { @class = "navbar-form navbar-right" }))
+                                        {
                                             <div class="box-search">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Tim kiem" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                                    <input type="text" class="form-control" name="query" placeholder="Tìm kiếm" aria-label="Recipient's username" aria-describedby="button-addon2">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        }
                                     </li>
                                     <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
@@ -250,7 +250,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @*@Scripts.Render("~/bundles/bootstrap")*@
-    <script src="~/Scripts/jsShopping.js"></script>
+    <script src="~/Scripts/jsShoppingCart.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

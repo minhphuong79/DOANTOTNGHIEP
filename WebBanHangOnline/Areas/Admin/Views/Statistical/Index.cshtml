@@ -87,15 +87,21 @@
                 type: 'GET',
                 data: { fromDate: '', toDate: '' },
                 success: function (rs) {
-
-                    $.each(rs.Data, function (i, item) {
+                    var groupedData = groupDataByMonth(rs.Data);
+                   @* $.each(rs.Data, function (i, item) {
                         var strDate = moment(item.Date).format('DD/MM/yyyy');
                         arrDate.push(strDate);
                         arrDoanhThu.push(item.DoanhThu);
                         arrLoiNhuan.push(item.LoiNhuan);
+                    });*@
+                    $.each(groupedData, function (month, values) {
+                        var strDate = moment(month, 'YYYY-MM').format('MM/YYYY'); // Định dạng tháng năm
+                        arrDate.push(strDate);
+                        arrDoanhThu.push(values.DoanhThu);
+                        arrLoiNhuan.push(values.LoiNhuan);
                     });
                     var areaChartData = {
-                        labels: arrDate,
+                        @*labels: arrDate,
                         datasets: [
                             {
                                 label: 'Lợi nhuận',
@@ -119,6 +125,31 @@
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
                                 data: arrDoanhThu
                             },
+                        ]*@
+                        labels: arrDate,
+                        datasets: [
+                            {
+                                label: 'Lợi nhuận',
+                                backgroundColor: 'rgba(244, 118, 233, 0.8)',
+                                borderColor: 'rgba(242, 163, 235, 0.8)',
+                                pointRadius: false,
+                                pointColor: '#3b8bba',
+                                pointStrokeColor: 'rgba(60,141,188,1)',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(60,141,188,1)',
+                                data: arrLoiNhuan
+                            },
+                            {
+                                label: 'Danh thu',
+                                backgroundColor: 'rgba(94, 236, 82, 0.8)',
+                                borderColor: 'rgba(173, 238, 168, 0.8)',
+                                pointRadius: false,
+                                pointColor: 'rgba(210, 214, 222, 1)',
+                                pointStrokeColor: '#c1c7d1',
+                                pointHighlightFill: '#fff',
+                                pointHighlightStroke: 'rgba(220,220,220,1)',
+                                data: arrDoanhThu
+                            }
                         ]
                     }
                     //-------------
@@ -149,6 +180,18 @@
 
         })
 
+        function groupDataByMonth(data) {
+            var result = {};
+            $.each(data, function (i, item) {
+                var monthYear = moment(item.Date).format('YYYY-MM'); // Định dạng tháng và năm
+                if (!result[monthYear]) {
+                    result[monthYear] = { DoanhThu: 0, LoiNhuan: 0 };
+                }
+                result[monthYear].DoanhThu += item.DoanhThu;
+                result[monthYear].LoiNhuan += item.LoiNhuan;
+            });
+            return result;
+        }
         function load_data(data) {
             var strHtml = "";
             $.each(data, function (i, item) {
@@ -161,6 +204,14 @@
                 strHtml += "</tr>";
             });
             $('#load_data').html(strHtml);
+        }
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
     </script>
 }

@@ -296,35 +296,36 @@ namespace WebBanHangOnline.Controllers
             var code = new { Success = false, msg = "", code = -1, Count = 0 };
             var db = new ApplicationDbContext();
             var checkProduct = db.Products.FirstOrDefault(x => x.Id == id);
-            if (checkProduct != null)
+
+            if (checkProduct != null && checkProduct.Quantity > 0)
             {
                 ShoppingCart cart = (ShoppingCart)Session["Cart"];
                 if (cart == null)
                 {
                     cart = new ShoppingCart();
                 }
+
                 ShoppingCartItem item = new ShoppingCartItem
                 {
                     ProductId = checkProduct.Id,
                     ProductName = checkProduct.Title,
                     CategoryName = checkProduct.ProductCategory.Title,
                     Alias = checkProduct.Alias,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    ProductImg = checkProduct.ProductImage.FirstOrDefault(x => x.IsDefault)?.Image,
+                    Price = checkProduct.PriceSale > 0 ? (decimal)checkProduct.PriceSale : checkProduct.Price,
+                    TotalPrice = quantity * (checkProduct.PriceSale > 0 ? (decimal)checkProduct.PriceSale : checkProduct.Price)
                 };
-                if (checkProduct.ProductImage.FirstOrDefault(x => x.IsDefault) != null)
-                {
-                    item.ProductImg = checkProduct.ProductImage.FirstOrDefault(x => x.IsDefault).Image;
-                }
-                item.Price = checkProduct.Price;
-                if (checkProduct.PriceSale > 0)
-                {
-                    item.Price = (decimal)checkProduct.PriceSale;
-                }
-                item.TotalPrice = item.Quantity * item.Price;
+
                 cart.AddToCart(item, quantity);
                 Session["Cart"] = cart;
-                code = new { Success = true, msg = "Thêm sản phẩm vào giở hàng thành công!", code = 1, Count = cart.Items.Count };
+                code = new { Success = true, msg = "Thêm sản phẩm vào giỏ hàng thành công!", code = 1, Count = cart.Items.Count };
             }
+            else
+            {
+                code = new { Success = false, msg = "Sản phẩm đã hết hàng!", code = -1, Count = 0 };
+            }
+
             return Json(code);
         }
 
@@ -333,13 +334,35 @@ namespace WebBanHangOnline.Controllers
         [HttpPost]
         public ActionResult Update(int id, int quantity)
         {
-            ShoppingCart cart = (ShoppingCart)Session["Cart"];
-            if (cart != null)
+            if (quantity <= 0)
             {
-                cart.UpdateQuantity(id, quantity);
-                return Json(new { Success = true });
+                return Json(new { Success = false, msg = "Số lượng phải lớn hơn 0!" });
             }
-            return Json(new { Success = false });
+
+            ShoppingCart cart = (ShoppingCart)Session["Cart"];
+            var db = new ApplicationDbContext();
+            var checkProduct = db.Products.FirstOrDefault(x => x.Id == id);
+
+            if (cart != null && checkProduct != null)
+            {
+                if (quantity <= checkProduct.Quantity)
+                {
+                    // Tìm sản phẩm trong giỏ hàng và cập nhật số lượng
+                    var item = cart.Items.FirstOrDefault(i => i.ProductId == id);
+                    if (item != null)
+                    {
+                        item.Quantity = quantity;
+                        item.TotalPrice = item.Quantity * item.Price;
+                        Session["Cart"] = cart; // Cập nhật lại session sau khi thay đổi
+                        return Json(new { Success = true, msg = "Cập nhật số lượng thành công!" });
+                    }
+                }
+                else
+                {
+                    return Json(new { Success = false, msg = $"Số lượng phải nhỏ hơn hoặc bằng {checkProduct.Quantity}!" });
+                }
+            }
+            return Json(new { Success = false, msg = "Không tìm thấy sản phẩm hoặc giỏ hàng trống!" });
         }
 
         [AllowAnonymous]

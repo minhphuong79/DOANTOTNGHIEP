@@ -72,6 +72,14 @@
                                     {
                                         <span>Hủy</span>
                                     }
+                                     @if (item.Status == 5)
+                                    {
+                                        <span>Xác nhận đơn hàng</span>
+                                    }
+                                     @if (item.Status == 6)
+                                    {
+                                        <span>Đang giao</span>
+                                    }
                                 </td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td>
@@ -128,6 +136,12 @@
                         </option>
                         <option value="4">
                             Hủy
+                        </option>
+                        <option value="5">
+                            Xác nhận đơn hàng
+                        </option>
+                        <option value="6">
+                            Đang giao
                         </option>
                     </select>
                 </div>

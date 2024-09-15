@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebBanHangOnline.Models;
+using PagedList;
+using WebBanHangOnline.Models.EF;
 
 namespace WebBanHangOnline.Controllers
 {
@@ -11,11 +13,55 @@ namespace WebBanHangOnline.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Products
-        public ActionResult Index()
-        {
-            var items = db.Products.ToList();
+        //public ActionResult Index()
+        //{
+        //    var items = db.Products.ToList();
             
+        //    return View(items);
+        //}
+        public ActionResult Index(int? page)
+        {
+            IEnumerable<Product> items = db.Products.OrderByDescending(x => x.Id);
+            var pageSize = 8;
+            if (page == null)
+            {
+                page = 1;
+            }
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            items = items.ToPagedList(pageIndex, pageSize);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
             return View(items);
+        }
+
+        //public ActionResult Search(string query)
+        //{
+        //    var products = db.Products
+        //        .Where(p => p.Title.Contains(query))
+        //        .ToList();
+
+        //    return View("Index", products);
+        //}
+
+        public ActionResult Search(string query, int? page)
+        {
+            var products = db.Products
+                .Where(p => p.Title.Contains(query))
+                .OrderByDescending(x => x.Id); // Sắp xếp theo Id giảm dần
+
+            var pageSize = 8; // Số lượng item trên mỗi trang
+            if (page == null)
+            {
+                page = 1;
+            }
+            var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var pagedList = products.ToPagedList(pageIndex, pageSize); // Tạo PagedList<Product>
+
+            ViewBag.PageSize = pageSize;
+            ViewBag.Page = page;
+            ViewBag.CurrentQuery = query; // Để giữ giá trị tìm kiếm khi phân trang
+
+            return View("Index", pagedList); // Truyền PagedList vào View
         }
 
         public ActionResult Detail(string alias,int id)

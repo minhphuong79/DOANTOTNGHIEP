@@ -9,7 +9,7 @@ using WebBanHangOnline.Models.EF;
 
 namespace WebBanHangOnline.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "Admin,Employee")]
+   [Authorize(Roles = "Admin,Employee")]
     public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -37,46 +37,99 @@ namespace WebBanHangOnline.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //public ActionResult Add(Product model, List<string> Images, List<int> rDefault)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (Images != null && Images.Count > 0)
+        //        {
+        //            for (int i = 0; i < Images.Count; i++)
+        //            {
+        //                if (i + 1 == rDefault[0])
+        //                {
+        //                    model.Image = Images[i];
+        //                    model.ProductImage.Add(new ProductImage
+        //                    {
+        //                        ProductId = model.Id,
+        //                        Image = Images[i],
+        //                        IsDefault = true
+        //                    });
+        //                }
+        //                else
+        //                {
+        //                    model.ProductImage.Add(new ProductImage
+        //                    {
+        //                        ProductId = model.Id,
+        //                        Image = Images[i],
+        //                        IsDefault = false
+        //                    });
+        //                }
+        //            }
+        //        }
+        //        model.CreatedDate = DateTime.Now;
+        //        model.ModifiedDate = DateTime.Now;
+        //        if (string.IsNullOrEmpty(model.SeoTitle))
+        //        {
+        //            model.SeoTitle = model.Title;
+        //        }
+        //        if (string.IsNullOrEmpty(model.Alias))
+        //            model.Alias = WebBanHangOnline.Models.Common.Filter.FilterChar(model.Title);
+        //        db.Products.Add(model);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.ProductCategory = new SelectList(db.ProductCategories.ToList(), "Id", "Title");
+        //    return View(model);
+        //}
         public ActionResult Add(Product model, List<string> Images, List<int> rDefault)
         {
             if (ModelState.IsValid)
             {
-                if (Images != null && Images.Count > 0)
+                // Kiểm tra điều kiện Price > PriceSale > OriginalPrice
+                if (model.Price > model.PriceSale && model.PriceSale > model.OriginalPrice)
                 {
-                    for (int i = 0; i < Images.Count; i++)
+                    if (Images != null && Images.Count > 0)
                     {
-                        if (i + 1 == rDefault[0])
+                        for (int i = 0; i < Images.Count; i++)
                         {
-                            model.Image = Images[i];
-                            model.ProductImage.Add(new ProductImage
+                            if (i + 1 == rDefault[0])
                             {
-                                ProductId = model.Id,
-                                Image = Images[i],
-                                IsDefault = true
-                            });
-                        }
-                        else
-                        {
-                            model.ProductImage.Add(new ProductImage
+                                model.Image = Images[i];
+                                model.ProductImage.Add(new ProductImage
+                                {
+                                    ProductId = model.Id,
+                                    Image = Images[i],
+                                    IsDefault = true
+                                });
+                            }
+                            else
                             {
-                                ProductId = model.Id,
-                                Image = Images[i],
-                                IsDefault = false
-                            });
+                                model.ProductImage.Add(new ProductImage
+                                {
+                                    ProductId = model.Id,
+                                    Image = Images[i],
+                                    IsDefault = false
+                                });
+                            }
                         }
                     }
+                    model.CreatedDate = DateTime.Now;
+                    model.ModifiedDate = DateTime.Now;
+                    if (string.IsNullOrEmpty(model.SeoTitle))
+                    {
+                        model.SeoTitle = model.Title;
+                    }
+                    if (string.IsNullOrEmpty(model.Alias))
+                        model.Alias = WebBanHangOnline.Models.Common.Filter.FilterChar(model.Title);
+                    db.Products.Add(model);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-                model.CreatedDate = DateTime.Now;
-                model.ModifiedDate = DateTime.Now;
-                if (string.IsNullOrEmpty(model.SeoTitle))
+                else
                 {
-                    model.SeoTitle = model.Title;
+                    // Thêm thông báo lỗi nếu điều kiện không thỏa mãn
+                    ModelState.AddModelError("", "Giá phải lớn hơn giá khuyến mãi và giá khuyến mãi phải lớn hơn giá nhập.");
                 }
-                if (string.IsNullOrEmpty(model.Alias))
-                    model.Alias = WebBanHangOnline.Models.Common.Filter.FilterChar(model.Title);
-                db.Products.Add(model);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
             ViewBag.ProductCategory = new SelectList(db.ProductCategories.ToList(), "Id", "Title");
             return View(model);
